@@ -18,8 +18,8 @@ It consists of 6 microservices:
  - Notification service
 And UI app
 
+![Screenshot 2023-04-23 at 8 32 21 pm](https://user-images.githubusercontent.com/71220725/233834675-4f61453a-9dc8-4dab-998a-3e86c2dc5b60.png)
 
-![Screenshot 2023-04-23 at 11 20 10 am](https://user-images.githubusercontent.com/71220725/233814165-94bcbd51-b09b-4efd-a63b-c60606e3654c.png)
 
 
 ### Infrastructure: 
