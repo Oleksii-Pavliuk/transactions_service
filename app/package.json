@@ -1,0 +1,38 @@
+{
+	"name": "transactions_service",
+	"version": "0.1.0",
+	"description": "transactions service of transactions50",
+	"type": "module",
+	"engines": {
+		"node": ">=19.0.0"
+	},
+	"main": "index.mjs",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/Oleksii-Pavliuk/transactions_service.git"
+	},
+	"author": "Oleksii Pavliuk",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Oleksii-Pavliuk/transactions_service/issues"
+	},
+	"homepage": "https://github.com/Oleksii-Pavliuk/transactions_service#readme",
+	"devDependencies": {
+		"express": "^4.18.2",
+		"nodemon": "^2.0.22"
+	},
+	"dependencies": {
+		"@opentelemetry/auto-instrumentations-node": "^0.36.5",
+		"@opentelemetry/exporter-trace-otlp-http": "^0.36.0",
+		"@opentelemetry/resources": "^1.10.0",
+		"@opentelemetry/sdk-metrics": "^1.12.0",
+		"@opentelemetry/sdk-node": "^0.36.1",
+		"@opentelemetry/semantic-conventions": "^1.10.0",
+		"consul": "^1.2.0",
+		"convict": "^6.2.4",
+		"uuid": "^9.0.0"
+	}
+}

@@ -1,0 +1,14 @@
+{
+  "port": 3001,
+  "origin": "*",
+  "pguser": "postgres",
+  "pgpassword": "postgres",
+  "pghost": "transactions-db-postgres",
+  "pgport": 5433,
+  "pgdatabase": "transactions-dev",
+  "authport": 8000,
+  "consulHost" : "consul-client",
+  "jaegerHost" : "jaeger",
+  "amqphost": "rabbitmq",
+  "amqpport": 5672
+}

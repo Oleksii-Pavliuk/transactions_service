@@ -1,0 +1,12 @@
+{
+  "port": 3001,
+  "origin": "*",
+  "pguser": "postgres",
+  "pgpassword": "postgres",
+  "pghost": "loaclhost",
+  "pgport": 5433,
+  "pgdatabase": "transactions-test",
+  "jaegerHost" : "localhost",
+  "amqphost": "localhost",
+  "amqpport": 5672
+}
