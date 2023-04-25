@@ -1,7 +1,7 @@
 import config from "./config/config.mjs";
 import amqp from "amqplib";
 import express from "express";
-import { query } from "./db/index.mjs";
+import { db } from "./db/postgres-connections.mjs.mjs";
 
 /* =================
    SERVER SETUP
@@ -45,22 +45,22 @@ async function main(queueName) {
     `amqp://${AMQPHOST}:${AMQPPORT}`
   );
 
-  const chFiatTransactions = await conn.createChannel(queueName);
-  await chFiatTransactions.assertQueue(queueName);
+  const ch = await conn.createChannel(queueName);
+  await ch.assertQueue(queueName);
 
   /* ======================
      START HANDLE MESSAGES
   =========================*/
-  chFiatTransactions.consume(queueName, async (msg) => {
-    await handleMessageConsume(queueName, msg, handlers = {
-      [queueName] : handleNewMessageEvent,
-    });
+  ch.consume(queueName, async (msg) => {
+    await handleMessageConsume(queueName, msg, handlers = {transaction : handleNewMessageEvent});
   });
 }
 
+
+
 export async function handleMessageConsume(channel, msg, handlers) {
   if (msg !== null) {
-    const handler = handlers[msg.properties.type];
+    const handler = handlers[msg.properties.type]; //When sending new message specify type "transaction"
 
     if (handler) {
       await handler(msg.content.toString());
@@ -82,10 +82,22 @@ export async function handleMessageConsume(channel, msg, handlers) {
 export async function handleNewMessageEvent(messageContent) {
   console.log("Received new_message: ", messageContent);
   const msg = JSON.parse(messageContent);
+  
+  const destination = msg.destination
+
+  db(destination).insert(msg.transaction).then(() => {
+    console.log("Success:");
+    console.log(msg);
+  }).catch((err) => {
+    console.log("Error:");
+    console.error(err)
+  }).finally(() => {
+    db.destroy(); //Should i close or not ? 
+  })
+
+
 
 }
-
-
 
 
 
