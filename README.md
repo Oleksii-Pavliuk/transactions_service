@@ -44,7 +44,7 @@ App running in container and connected to Consul server, Jaeger via OpenTelemtry
 
 * container runs interactivly to deregister service from Consul when it stopped correctly, so it should be stopped only from containers bash *
 
-To run this container running postgres container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo)  <b>at least!!!</b> required.
+To run this container running postgres container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo) <b>at least</b> required.
 
 All settings of Django app contains in docker run script named ```infrastructure/auth-service-deploy.sh```(infrastructure repo)  and may be specified in it before running, all sensitive data should be stored in Kubernetes or Docker swarm secrets. 
 
@@ -86,7 +86,7 @@ App running in container and connected to Consul server, Jaeger via OpenTelemtry
     
 All routes will be secured with JWT authentication with 2h expiration time, to obtain JWT user needs to pass authorisation (login/register in front-end app).
 
-To run this container running postgres container, redis container and mongoDB container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo)  <b>at least!!!</b> required.
+To run this container running postgres container, redis container and mongoDB container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo)  <b>at least</b> required.
 
 All settings of Express app contains in docker run script named ```infrastructure/userManagment-service-deploy.sh```(infrastructure repo) and ```app/config/*``` in they may be specified in it before running, all sensitive data should be stored in Kubernetes or Docker swarm secrets. 
 
@@ -94,16 +94,25 @@ To do requests to authentication service we need to specify API_KEY in container
 
 
 ### Transactions service
-Express server built with JavaScript using PostgreSQL to store transactions data.
-This server will consume messages from other transaction related services and write to Postgres transactions database.
+Express server (to Connect to Consul and Jaeger) built with JavaScript using PostgreSQL to store transactions data.
+This app will consume messages via RabbitMQ from other transaction related services and write to Postgres transactions database.
 
 App running in container and connected to Consul server, Jaeger via OpenTelemtry, RabbitMQ server and postgreSQL server.
     
 
-To run this container running postgres container and RabbitMQ container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo)  <b>at least!!!</b> required.
+To run this container running postgres container and RabbitMQ container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo)  <b>at least</b> required.
 
 All settings of Express app contains in docker run script named ```infrastructure/transactions-service-deploy.sh```(infrastructure repo) and ```app/config/*``` in they may be specified in it before running, all sensitive data should be stored in Kubernetes or Docker swarm secrets. 
 
 
 
+### Payments service 
+Express server (to Connect to Consul and Jaeger) built with TypeScript using PayPal or Stripe APIs to handle payments.
+This app will consume messages via RabbitMQ from API Gateway and send response with payment url/details/confirmation back.
 
+
+App running in container and connected to Consul server, Jaeger via OpenTelemtry and RabbitMQ server.
+
+To run this container running RabbitMQ container (```infrastructure/platform/docker-compose.yaml```)(infrastructure repo)  <b>at least</b> required.
+
+All settings of Express app contains in docker run script named ```infrastructure/payments-service-deploy.sh```(infrastructure repo) and ```app/config/*``` in they may be specified in it before running, all sensitive data should be stored in Kubernetes or Docker swarm secrets. 

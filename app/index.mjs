@@ -12,20 +12,11 @@ const AMQPHOST  = config.get("amqphost");
 const AMQPPORT = config.get("amqpport"); 
 
 // Queue names
-const producers = [
-  "FiatTransactions",
-  "ETHTransactions",
-  "FiatWithdraws",
-  "ETHWithdraws",
-  "FiatDeposits",
-  "ETHDeposits"
-]
 
 app.use(express.json());
 
-for (let producer of producers){
-  main(producer).catch((err) => console.log(err));
-}
+main(producer).catch((err) => console.log(err));
+
 
 /* ======
    ROUTES
@@ -94,9 +85,6 @@ export async function handleNewMessageEvent(messageContent) {
   }).finally(() => {
     db.destroy(); //Should i close or not ? 
   })
-
-
-
 }
 
 
