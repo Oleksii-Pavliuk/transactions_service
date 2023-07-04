@@ -1,6 +1,6 @@
 
 import Knex  from 'knex';
-import config from "../config/config";
+import config from "../config/config.mjs";
 
 const pgUser = config.get("pguser");
 const pgPassword = config.get("pgpassword");

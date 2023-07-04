@@ -8,6 +8,6 @@ RUN npm install
 
 COPY /app /app
 
-# Set the command to run the compiled JavaScript code
-CMD [ "node","--require ./opentelemetry-tracing.mjs" "index.mjs" ]
+
+CMD [ "node","--import","./opentelemetry-tracing.mjs","index.mjs" ]
 

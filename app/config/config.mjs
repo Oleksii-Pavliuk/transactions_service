@@ -15,6 +15,13 @@ const config = convict({
 		default: null,
 		env: "PORT",
 		arg: "port",
+	},	
+	origin: {
+		doc: "Allowed CORS servers",
+		format: String,
+		default: "*",
+		env: "ORIGIN",
+		arg: "origin",
 	},
 	pguser: {
 		doc: "The postgres user that the application will use",

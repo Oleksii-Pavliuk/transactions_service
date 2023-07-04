@@ -2,7 +2,7 @@ import ip from "ip";
 import Consul from "consul";
 import { v4 as uuidv4 } from "uuid";
 
-import config from "../config/config";
+import config from "../config/config.mjs";
 
 const CONSUL_HOST = config.get("consulHost") 
 const CONSUL_PORT= config.get("consulPort") 
