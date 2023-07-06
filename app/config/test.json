@@ -7,6 +7,7 @@
   "pgport": 5433,
   "pgdatabase": "transactions-test",
   "jaegerHost" : "localhost",
+  "consulHost" : "localhost",
   "amqphost": "localhost",
   "amqpport": 5672
 }

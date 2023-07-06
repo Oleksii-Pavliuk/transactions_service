@@ -8,6 +8,7 @@
 	},
 	"main": "index.mjs",
 	"scripts": {
+		"dev": "NODE_ENV=test nodemon  --import ./opentelemetry-tracing.mjs index.mjs",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
