@@ -3,10 +3,12 @@ import amqp from "amqplib";
 import express from "express";
 import { db } from "./db/postgres-connections.mjs.mjs";
 import { register as registerConsul } from "./consul/consul-connection.mjs";
+import {otelReg} from "./opentelemetry-tracing.mjs"
 
 /* =================
    SERVER SETUP
 ================== */
+otelReg();
 const app = express();
 const PORT = config.get("port");
 const AMQPHOST = config.get("amqphost");

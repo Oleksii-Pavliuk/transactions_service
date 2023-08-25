@@ -6,19 +6,21 @@ import { Resource} from "@opentelemetry/resources";
 
 import config from "./config/config.mjs"
 
-const JAEGER_HOST = config.get("jaegerHost")
-const JAEGER_PORT = config.get("jaegerPort")
+export const otelReg = () => {
+  
+  const JAEGER_HOST = config.get("jaegerHost")
+  const JAEGER_PORT = config.get("jaegerPort")
+  const JAEGER_SERVICE_NAME= config.get("ServiceName");
 
+  const resource  = new Resource({
+      [SemanticResourceAttributes.SERVICE_NAME]: JAEGER_SERVICE_NAME,
+    });
+  const sdk = new NodeSDK({
+      resource  ,
+      traceExporter: new OTLPTraceExporter({url: `http://${JAEGER_HOST}:${JAEGER_PORT}/v1/traces`,headers: {}, concurrencyLimit: 10 }),
+      instrumentations: [getNodeAutoInstrumentations()],
+    });
 
-const resource  = new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: "Transactions SERVICE",
-  });
-const sdk = new NodeSDK({
-    resource  ,
-    traceExporter: new OTLPTraceExporter({url: `http://${JAEGER_HOST}:${JAEGER_PORT}/v1/traces`,headers: {}, concurrencyLimit: 10 }),
-    instrumentations: [getNodeAutoInstrumentations()],
-  });
-
-sdk.start()
-console.log("Registred with Open telemetry")
-
+  sdk.start()
+  console.log("Registred with Open telemetry")
+}

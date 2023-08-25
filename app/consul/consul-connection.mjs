@@ -10,7 +10,7 @@ const SERVICE_HOST= ip.address();
 const SERVICE_PORT= config.get("port");
 const HEALTH_CHECK_URL = `http://${SERVICE_HOST}:${SERVICE_PORT}/health`;
 const CONSUL_ID = uuidv4();
-const CONSUL_SERVICE_NAME= config.get("consulServiceName");
+const CONSUL_SERVICE_NAME= config.get("ServiceName");
 
 let consul;
 if (CONSUL_SERVICE_NAME) {
