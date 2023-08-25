@@ -8,7 +8,7 @@
 	},
 	"main": "index.mjs",
 	"scripts": {
-		"dev": "NODE_ENV=test nodemon  --import ./opentelemetry-tracing.mjs index.mjs",
+		"dev": "NODE_ENV=test node index.mjs",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -21,9 +21,7 @@
 		"url": "https://github.com/Oleksii-Pavliuk/transactions_service/issues"
 	},
 	"homepage": "https://github.com/Oleksii-Pavliuk/transactions_service#readme",
-	"devDependencies": {
-		"nodemon": "^2.0.22"
-	},
+	"devDependencies": {},
 	"dependencies": {
 		"@opentelemetry/auto-instrumentations-node": "^0.36.5",
 		"@opentelemetry/exporter-trace-otlp-http": "^0.36.0",
