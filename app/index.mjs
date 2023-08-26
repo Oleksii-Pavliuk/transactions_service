@@ -1,9 +1,9 @@
 import config from "./config/config.mjs";
 import amqp from "amqplib";
 import express from "express";
-import { db } from "./db/postgres-connections.mjs.mjs";
 import { register as registerConsul } from "./consul/consul-connection.mjs";
-import {otelReg} from "./opentelemetry-tracing.mjs"
+import { otelReg } from "./opentelemetry-tracing.mjs"
+import { handleNewTransactionEvent } from "./handlers/handle-new-transaction.mjs"
 
 /* =================
    SERVER SETUP
@@ -18,18 +18,10 @@ const AMQPPORT = config.get("amqpport");
 
 app.use(express.json());
 
+// Run consuming function
+
 main("transactions").catch((err) => console.log(err));
 
-/* ======
-   ROUTES
-========*/
-app.get("/health", (_req, res) => {
-	res.sendStatus(200);
-});
-
-/* ===========
-   SUBSCRIBERS
-=============*/
 async function main(queueName) {
 	/* ======================
      START RABBIT CONSUMER
@@ -43,9 +35,10 @@ async function main(queueName) {
      START HANDLE MESSAGES
   =========================*/
 	ch.consume(queueName, async (msg) => {
-		await handleMessageConsume(ch, msg, { transaction: handleNewMessageEvent });
+		await handleMessageConsume(ch, msg, { transaction: handleNewTransactionEvent });
 	});
 }
+
 
 export async function handleMessageConsume(channel, msg, handlers) {
 	if (msg !== null) {
@@ -65,29 +58,13 @@ export async function handleMessageConsume(channel, msg, handlers) {
 	}
 }
 
-/* ================================
-   INDIVIDUAL MESSAGE TYPE HANDLERS
-==================================*/
-export async function handleNewMessageEvent(messageContent) {
-	console.log("Received new_message: ", messageContent);
-	const msg = JSON.parse(messageContent);
 
-	const destination = msg.destination;
-
-	db(destination)
-		.insert(msg.transaction)
-		.then(() => {
-			console.log("Success:");
-			console.log(msg);
-		})
-		.catch((err) => {
-			console.log("Error:");
-			console.error(err);
-		})
-		.finally(() => {
-			db.destroy(); //Should i close or not ?
-		});
-}
+/* ======
+   ROUTES
+========*/
+app.get("/health", (_req, res) => {
+	res.sendStatus(200);
+});
 
 /* =================
    SERVER START
