@@ -32,14 +32,24 @@ const serviceDefinition = {
 };
 
 const doGracefulShutdown = async () => {
-	if (!consul) return;
-	await consul.agent.service.deregister({ id: CONSUL_ID });
+	try{
+		if (!consul) return;
+		await consul.agent.service.deregister({ id: CONSUL_ID });
+	} catch (err) {
+		console.error(err)
+	}
+	process.exit(0)
 };
 
 export const register = async () => {
-	if (!consul) return;
-	await consul.agent.service.register(serviceDefinition);
-	console.log("Registred with Consul")
-	process.on("SIGTERM", doGracefulShutdown);
-	process.on("SIGINT", doGracefulShutdown);
+	try{
+		if (!consul) return;
+		await consul.agent.service.register(serviceDefinition);
+		console.log("Registred with Consul")
+		process.on("SIGTERM", doGracefulShutdown);
+		process.on("SIGINT", doGracefulShutdown);
+	} catch(err) {
+		console.error(err)
+	}
+	
 };
