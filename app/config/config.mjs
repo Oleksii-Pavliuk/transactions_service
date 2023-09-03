@@ -62,7 +62,7 @@ const config = convict({
 	ServiceName: {
 		doc: "The name by which the service is registered in Consul. If not specified, the service is not registered",
 		format: "*",
-		default: "Transactions SERVICE",
+		default: "Transactions Service",
 		env: "SERVICE_NAME",
 	},
 	consulHost: {
